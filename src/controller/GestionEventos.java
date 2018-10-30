@@ -140,26 +140,43 @@ public class GestionEventos {
 	// Método que llama a compararContenido de GestionDatos
 	private int call_compararContenido() throws FileNotFoundException {
 		
-		System.out.println("se pasan a model.compararContenido los ficheros: " + view.getFichero1().getText() + " y " 
-				+ view.getFichero2().getText());
-
-		// Si la llamada al método compararContenido del modelo devuelve true, mostramos la igualdad de los ficheros en el TextArea
-		try {
-			if(model.compararContenido(view.getFichero1().getText(), view.getFichero2().getText())==true){
-				view.writeTextArea(view.getFichero1().getText()+" es igual que " + view.getFichero2().getText());
+		// Comprobamos que los campos no estan vacíos
+		if (view.getFichero1().getText().equals("") || view.getPalabra().getText().equals("")){
+			view.showError("Falta introducir los datos");
+		} else{
+			try {
+				// recogemos el array que devuelve el método
+				String[] palabras = model.compararContenido(view.getFichero1().getText(), Integer.parseInt(view.getPalabra().getText()));
+				
+				// Utilizamos un stringbuilder al que añadimos las palabras coincidentes
+				StringBuilder strb = new StringBuilder();
+				
+				// Utilizamos un contador para mostrar las palabras coincidentes
+				int contador = 0;
+				// Recorremos el array con un bucle for, si el elemento del array no es nulo lo añadimos al StringBuilder y sumamos uno al contador
+				for (int i=0; i<palabras.length; i++){
+					if (palabras[i] != null){
+						strb.append(palabras[i] + "\n");
+						contador++;
+					}
+				}
+				// Añadimos al contador el número de palabras con los caracteres solicitados
+				strb.append("Hay " + contador + " palabras con " + view.getPalabra().getText() + " caracteres");
+				// mostramos el StringBuilder en el TextArea
+				view.writeTextArea(strb.toString());
 				return 1;
-			} else {
-				// En cualquier otro caso, mostramos la desigualdad de los ficheros
-				view.writeTextArea(view.getFichero1().getText()+" es diferente de " + view.getFichero2().getText());
-				return 0;
+			}catch (FileNotFoundException e){
+				view.showError("Error! no se encontraron los ficheros, revise ficheros introducidos");
+				return 2;
+			}catch (IOException e){
+				view.showError("Error al llamar al método compararContenido");
+				return 2;
 			}
-		}catch (FileNotFoundException e){
-			view.showError("Error! no se encontraron los ficheros, revise ficheros introducidos");
-			return 2;
-		}catch (IOException e){
-			view.showError("Error al llamar al método compararContenido");
-			return 2;
 		}
+		return 0;
+			
+		
+
 	} // Fin del método call_compararContenido()
 
 	

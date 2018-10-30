@@ -2,3 +2,8 @@ moluscos
 mamíferos
 reptiles
 insectos
+rata
+pez
+ayer
+mañana
+cinco

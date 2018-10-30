@@ -69,38 +69,38 @@ public class GestionDatos {
 		return total_lineas;
     }
     
-	public boolean compararContenido (String fichero1, String fichero2) throws IOException{
+	public String[] compararContenido (String fichero1, int longitud) throws IOException{
 		//TODO: Implementa la función
-		// Abrimos los fichero con el método abrirFichero y los pasamos a brFichero1 y brFichero2
-		brFichero1 = abrirBuffered(fichero1);
-		brFichero2 = abrirBuffered(fichero2);
+		// Abrimos el fichero con el método abrirFichero
 		
-		// Utilizamos los Strings str1 y str2 para almacenar las líneas de cada archivo y compararlas
+		brFichero1 = abrirBuffered(fichero1);
+		// obtenemos las líneas del fichero
+		int total_lineas = contarLineas(brFichero1)+1;
+
+		brFichero1 = abrirBuffered(fichero1);
+		// Utilizamos el String str1
 		str1 = brFichero1.readLine();
-		str2 = brFichero2.readLine();
-		/* Evaluamos la igualdad línea a línea. Si la igualdad no se cumple en algún momento devolvemos false, 
-		 * en caso contrario devovemos true. Utilizamos un bucle while, mientras los strings no sean nulos, 
-		 * si la línea no es igual que la del otro archivo devuelve false. En caso contrario muestra la línea
-		 * por consola y lee una nueva línea con los BufferedReader e incrementa el contador de líneas en 1
-		 * Si se completa el bucle while, los dos ficheros son iguales y devuelve true.
-		 */
-		while (str1 != null && str2 != null){
-			if (!str1.equals(str2)) {
-				return false;
-			} else {
-				System.out.println("línea: " + contador_lineas + "\t" + str1 + "\t" + str2);
+		
+		// Utilzamos un array de string con el total de líneas
+		String[] palabras = new String[total_lineas];
+		
+		/* Evaluamos la palabra línea a línea. Mientras el string no sea nulo, si la palabra contiene el número de carácteres 
+		 * la almacenamos en el array de Strings. Utilizamos un bucle for
+		 * */
+		for (int i=0; i<total_lineas; i++){
+			if (str1 != null && str1.length() == longitud){
+				palabras[i] = str1;
+				System.out.println(str1);
+				}
+				// leemos una nueva línea
 				str1 = brFichero1.readLine();
-				str2 = brFichero2.readLine();
-				contador_lineas++;
-			}
-			
-		}
+		}							
+
 		// Cerramos los ficheros con el método cerrarFichero
 		cerrarFichero(brFichero1);
-		cerrarFichero(brFichero2);
-		// Reseteamos el contador de líneas a 1
-		contador_lineas = 1;
-		return true;
+		
+		// Devolvemos el array
+		return palabras;
 	} // Fin de compararContenido
 	
 	

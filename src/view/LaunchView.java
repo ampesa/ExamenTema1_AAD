@@ -21,7 +21,8 @@ public class LaunchView extends JFrame {
 		panel = new JPanel();
 		
 		// Botones
-		comparar = new JButton("Comparar contenido");
+		// Cambiamos el primer botón a Buscar Palabras
+		comparar = new JButton("Buscar Palabras");
 		comparar.setPreferredSize(new Dimension(150, 26));
 		buscar = new JButton("Buscar palabra");
 		buscar.setPreferredSize(new Dimension(150, 26));
@@ -56,7 +57,8 @@ public class LaunchView extends JFrame {
 		
 		label_f1 = new JLabel("Fichero 1:");
 		label_f2 = new JLabel("Fichero 2:");
-		label_pal = new JLabel("Palabra:");
+		// Cambiamos palabra por longitud
+		label_pal = new JLabel("Longitud:");
 		// Añadimos las etiquetas que acompañan a los JTextField
 		label_or = new JLabel("Origen");
 		label_des = new JLabel("Destino");
